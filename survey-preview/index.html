@@ -479,10 +479,10 @@
     .intro-gift-name span { width: 20px; height: 20px; border-radius: 50%; background: #d4dc2c; color: #181a1f; font-size: 12px;
       display: inline-flex; align-items: center; justify-content: center; flex: none; }
     .intro-gift-sub { margin: 0; font-size: 12px; line-height: 1.55; color: #c9c6bb; }
-    .intro-manual { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 2px; }
+    .intro-manual { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin-top: 2px; }
     .intro-manual img { width: 100%; aspect-ratio: 1080 / 760; object-fit: cover; object-position: top; border-radius: 8px; background: #f0ebe1; }
-    .intro-compose { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 2px; }
-    .intro-compose .design-thumb { border-radius: 8px; }
+    .intro-compose { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin-top: 2px; }
+    .intro-compose .design-thumb { border-radius: 8px; min-width: 0; width: 100%; }
 
   </style>
 </head>
@@ -503,6 +503,27 @@
         <div class="hero-eyebrow">RE:MAIN:D · 사장님만 모르는 고객이 올 이유</div>
         <h1 class="hero-title">고객이 우리 매장에<br/>왜 와야 할까요?</h1>
         <div class="hero-pill">싸고, 양 많고, 친절해서? 그 이유만으로는 절대 안 옵니다.</div>
+      </div>
+      <!-- 시작 화면 선물 안내: 끝까지 답하면 받는 것을 먼저 보여줘서 초반 이탈을 줄인다 -->
+      <div class="intro-gift">
+        <p class="intro-gift-eyebrow">🎁 끝까지 답해 주시면 드리는 선물</p>
+        <h2 class="intro-gift-title">고객이 올 이유를 만들고,<br/>다시 올 구조를 만드는 핵심 뼈대</h2>
+        <p class="intro-gift-desc">이 브랜딩 스토리 질문에 답변을 남겨 주시면, 아래 두 가지를 선물로 드립니다.</p>
+
+        <div class="intro-gift-item">
+          <p class="intro-gift-name"><span>1</span>직원용 고객 접객 멘트 매뉴얼</p>
+          <p class="intro-gift-sub">들어오시는 순간부터 주문까지, 직원이 바로 따라 하는 상황별 행동과 멘트 지침</p>
+          <div class="intro-manual">
+            <img src="https://jangsamarketing-hub.github.io/remaind-branding/survey-assets/manual-enter.png" alt="접객 매뉴얼 1장 들어오시는 순간: 문이 열리면, 자리가 모두 찼을 때의 행동과 멘트" loading="lazy" />
+            <img src="https://jangsamarketing-hub.github.io/remaind-branding/survey-assets/manual-order.png" alt="접객 매뉴얼 2장 주문하시는 과정: 메뉴판을 오래 넘기실 때, 인원에 맞춘 추천 멘트" loading="lazy" />
+          </div>
+        </div>
+
+        <div class="intro-gift-item">
+          <p class="intro-gift-name"><span>2</span>브랜드 스토리 답변 총정리본</p>
+          <p class="intro-gift-sub">대표님 답변을 한 번에 정리한 파일 + 플레이스 대문 사진 유형 아이디어</p>
+          <div class="intro-compose" id="introComposePreview" aria-label="플레이스 대문 사진 구성 예시 4가지"></div>
+        </div>
       </div>
       <p style="font-size:14px; color:#374151; margin:0 0 12px;">
         고객은 각자의 목적을 가지고 매장을 찾습니다. 사장님이 생각하는 장점도 고객의 입장에서 해석해, 그 목적에 맞는 <strong>'올 이유'</strong>로 보여줘야 합니다.
