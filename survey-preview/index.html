@@ -489,6 +489,14 @@
     .intro-lead { margin: 0 0 16px; font-size: 15px; line-height: 1.7; color: #374151; text-align: center; }
     .intro-lead strong { color: var(--text); }
 
+    /* v10: 여러 답을 적던 칸을 작은 칸으로 나눔 */
+    .split-grid { display: grid; grid-template-columns: repeat(var(--split-cols, 2), minmax(0, 1fr)); gap: 6px; }
+    .split-cell { display: grid; gap: 3px; min-width: 0; }
+    .split-cell span { font-size: 11.5px; color: var(--muted); font-weight: 600; }
+    .split-cell input { padding: 9px 10px; font-size: 13.5px; min-width: 0; width: 100%; border: 1px solid var(--border);
+      border-radius: 10px; font-family: inherit; outline: none; background: #fafafa; }
+    .split-cell input:focus { border-color: var(--primary); background: #fff; }
+
   </style>
 </head>
 <body>
@@ -2074,6 +2082,8 @@ function applyIndustry(key) {
   selectedSentence = '';
   document.getElementById('reasonContextPill').textContent = '고른 이유 ·';
   updateGuestContext();
+  // split-fields.js는 이 파일 뒤에 실리므로, 처음 불릴 때는 아직 없을 수 있다.
+  if (typeof refreshSplitFields === 'function') refreshSplitFields();
 }
 
 function updateGuestContext() {
@@ -2436,6 +2446,92 @@ function downloadResult(ext) {
 }
 
 applyIndustry('food');
+
+  </script>
+  <script>
+// 한 칸에 여러 답을 적던 질문(예: 현재 / 목표 / 최고 / 최저 월매출)을 작은 칸 여러 개로 나눈다.
+// 원래 입력칸은 숨겨 두고 "현재: 3,200만 / 목표: 5,000만"처럼 합쳐서 채우므로, 시트 열과 정리본은 그대로다.
+
+// [칸 이름, 예시] 목록. 업종에 따라 바뀌는 칸은 함수로 둔다.
+const SPLIT_FIELDS = {
+  bizHours: [['영업시간', '예) 11:30~22:00'], ['휴무일', '예) 매주 월요일']],
+  parkingInfo: [['주차 형태', '예) 매장 앞'], ['가능 대수', '예) 4대'], ['위치·안내', '예) 공영주차장']],
+  spaceFloor: [['평수', '예) 35평'], ['층수', '예) 1층']],
+  tableCounts: () => labelParts(industryText('tableLabel'), /\s*수$/).map(p => [p, '예) 3개']),
+  depositAndRent: [['보증금', '예) 5,000만'], ['월세', '예) 280만']],
+  channelRatio: () => labelParts(industryText('channelLabel'), /\s*비중$/).map(p => [p, '예) 60%']),
+  salesMetrics: [['현재', '예) 3,200만'], ['목표', '예) 5,000만'], ['최고', '예) 4,500만'], ['최저', '예) 2,400만']],
+  expTeamSpec: [['팀당 제공 금액', '예) 5만 원 상당'], ['희망 모집 인원', '예) 월 10팀']],
+  ownerContact: [['성함', '예) 홍길동'], ['연락처', '예) 010-0000-0000']],
+  snsChannels: [['인스타그램', '예) @store_official'], ['카카오톡 채널', '예) OO매장']],
+  competitorsAndRef: [['경쟁 매장', '예) 근처 OO매장'], ['닮고 싶은 매장', '예) OO스테이크하우스']]
+};
+
+// "테이블 수 (2인 / 4인 / 6인 이상)" → ['2인', '4인', '6인 이상'], "홀 / 포장 / 배달 비중" → ['홀', '포장', '배달']
+function labelParts(label, trailing) {
+  const inParens = label.match(/\(([^)]+)\)/);
+  const base = (inParens ? inParens[1] : label).replace(trailing, '').trim();
+  let parts = base.split('/').map(s => s.trim()).filter(Boolean);
+  if (parts.length < 2) parts = base.split('·').map(s => s.trim()).filter(Boolean);
+  return parts.map(p => p.replace(trailing, '').trim());
+}
+
+function splitInputType(label) {
+  return label === '연락처' ? 'tel' : 'text';
+}
+
+function combineSplitValue(original, inputs) {
+  original.value = inputs
+    .map(input => [input.dataset.part, input.value.trim()])
+    .filter(([, v]) => v)
+    .map(([part, v]) => `${part}: ${v}`)
+    .join(' / ');
+}
+
+function renderSplitField(id) {
+  const original = document.getElementById(id);
+  if (!original) return;
+  const config = SPLIT_FIELDS[id];
+  const parts = typeof config === 'function' ? config() : config;
+  const existing = document.querySelector(`.split-grid[data-for="${id}"]`);
+  if (existing) existing.remove();
+
+  // 나눌 칸이 하나뿐이면 원래 입력칸을 그대로 쓴다.
+  if (parts.length < 2) {
+    original.hidden = false;
+    return;
+  }
+  original.hidden = true;
+  original.value = '';
+
+  const grid = document.createElement('div');
+  grid.className = 'split-grid';
+  grid.dataset.for = id;
+  grid.style.setProperty('--split-cols', parts.length === 3 ? 3 : 2);
+  const inputs = parts.map(([label, placeholder], i) => {
+    const cell = document.createElement('label');
+    cell.className = 'split-cell';
+    const name = document.createElement('span');
+    name.textContent = label;
+    const input = document.createElement('input');
+    input.type = splitInputType(label);
+    input.id = `${id}__${i}`;
+    input.dataset.part = label;
+    input.placeholder = placeholder;
+    cell.append(name, input);
+    grid.append(cell);
+    return input;
+  });
+  grid.addEventListener('input', () => combineSplitValue(original, inputs));
+  original.after(grid);
+}
+
+// 업종이 바뀌면 테이블 수·매출 비중처럼 업종별 칸도 다시 만든다.
+function refreshSplitFields() {
+  Object.keys(SPLIT_FIELDS).forEach(renderSplitField);
+}
+
+refreshSplitFields();
 
   </script>
 </body>
