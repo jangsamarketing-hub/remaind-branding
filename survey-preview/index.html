@@ -501,6 +501,20 @@
     .feedback-note { background: #fff7ed; border-left: 3px solid #f59e0b; border-radius: 8px; padding: 10px 12px; margin: 6px 0 4px; display: grid; gap: 4px; }
     .feedback-note p { margin: 0; font-size: 13px; line-height: 1.6; color: #374151; }
 
+    /* v12: 리뷰 설득 문구 위치, 선택 사항 표시, 배달앱 칩, 매출 공식 2줄 */
+    .chips[hidden] { display: none; }
+    #deliveryAppBox { margin-bottom: 8px; }
+    .optional-note { margin: 14px 0 2px; font-size: 13.5px; font-weight: 700; color: #1d4ed8; background: var(--primary-light);
+      border-radius: 10px; padding: 10px 12px; line-height: 1.55; }
+    .opt-tag { font-size: 11px; font-weight: 700; color: #1d4ed8; background: var(--primary-light); padding: 2px 7px; border-radius: 6px; margin-left: 4px; }
+    .sales-formula { flex-direction: column; gap: 6px; }
+    .sales-formula .f-row { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 17px; flex-wrap: wrap; }
+    .sales-formula .f-sub { font-size: 12.5px; color: #c9c6bb; }
+    .sales-desc b { color: #fff; }
+    .sales-warning { background: #2a1f1f; border-left: 3px solid #f87171; border-radius: 10px; padding: 12px 14px; display: grid; gap: 6px; }
+    .sales-warning p { margin: 0; font-size: 13px; line-height: 1.65; color: #e7d6d6; }
+    .sales-warning b { color: #fff; }
+
   </style>
 </head>
 <body>
@@ -864,6 +878,12 @@
 
       <div class="box">
         <div class="box-title">지금 리뷰 이벤트를 진행하고 계세요?</div>
+        <div class="feedback-note">
+          <p>고객님이 남긴 리뷰는 <strong>매장 방문에 가장 큰 영향</strong>을 줍니다.</p>
+          <p>오늘 하루에 달린 리뷰가 4개 이상이면 "이 매장 장사 잘되네, 여기 괜찮은 것 같다, 그냥 여기 가자"가 됩니다. 고객은 먼저 돈을 쓴 다른 사람의 의견을 보고 심리적 안정감을 얻은 뒤 방문해요.</p>
+          <p>그런데 최근 리뷰가 3개월 전, 6개월 전이라면 지금도 영업하는지 알 수 없어서 <strong>신규 고객은 절대 오지 않습니다.</strong></p>
+          <p>리뷰를 돈 주고 작업하면 <strong>리뷰 1개당 2,000원 이상</strong>을 실제로 지불해야 해요. 그만큼 리뷰는 중요합니다.</p>
+        </div>
         <div class="chips" data-group="reviewEvent" data-max="1">
           <button type="button" class="chip" data-val="진행하고 있어요">진행하고 있어요</button>
           <button type="button" class="chip" data-val="예전에 했는데 지금은 안 해요">예전에 했는데 지금은 안 해요</button>
@@ -871,7 +891,7 @@
         </div>
       </div>
       <div class="box">
-        <div class="box-title">리뷰 이벤트 · 참여 손님 1명당 원가</div>
+        <div class="box-title">리뷰 이벤트 참여 손님 1명당 원가 지출 가능 금액</div>
         <div class="chips" data-group="reviewBudget" data-max="1">
           <button type="button" class="chip" data-val="1,000원 미만">1,000원 미만</button>
           <button type="button" class="chip" data-val="1,000원~2,000원">1,000원~2,000원</button>
@@ -901,7 +921,7 @@
         </div>
       </div>
       <div class="box">
-        <div class="box-title">설문조사 참여 보상 · 응답 1명당 원가</div>
+        <div class="box-title">설문조사 참여 손님 1명당 원가 지출 가능 금액</div>
         <div class="chips" data-group="surveyBudget" data-max="1">
           <button type="button" class="chip" data-val="1,000원 미만">1,000원 미만</button>
           <button type="button" class="chip" data-val="1,000원~2,000원">1,000원~2,000원</button>
@@ -912,7 +932,7 @@
       </div>
 
       <div class="box">
-        <div class="box-title">재방문 포인트 · 결제액 대비 적립률</div>
+        <div class="box-title">재방문 포인트 적립 지출 가능 비율 (결제액 대비)</div>
         <div class="chips" data-group="pointRate" data-max="1">
           <button type="button" class="chip" data-val="적립은 안 하고 싶어요">적립은 안 하고 싶어요</button>
           <button type="button" class="chip" data-val="1%">1%</button>
@@ -981,7 +1001,7 @@
 
         <div class="grid-2">
           <div>
-            <label class="field-label">매장 전화번호</label>
+            <label class="field-label">매장 전용 전화번호 (예약 등록용)</label>
             <input type="text" id="storePhone" placeholder="예) 063-000-0000" />
           </div>
           <div>
@@ -1004,8 +1024,17 @@
           </div>
         </div>
 
-        <label class="field-label">매출 현황 (현재 / 목표 / 최고 / 최저 월매출)</label>
+        <label class="field-label">월매출 현황 (현재 / 목표 / 역대 최고 / 역대 최저)</label>
         <input type="text" id="salesMetrics" placeholder="예) 현재 3,200만 / 목표 5,000만 / 최고 4,500만 / 최저 2,400만" />
+
+        <label class="field-label">지금 영업이익은 대략 어느 정도인가요?</label>
+        <p class="box-sub">흑자인지 적자인지, 얼마나인지 알아야 마케팅비를 얼마나 쓸 수 있을지 정할 수 있어요. 대략이면 충분해요.</p>
+        <div class="chips" data-group="profitState" data-max="1">
+          <button type="button" class="chip" data-val="흑자예요">흑자예요</button>
+          <button type="button" class="chip" data-val="본전 정도예요">본전 정도예요</button>
+          <button type="button" class="chip" data-val="적자예요">적자예요</button>
+        </div>
+        <input type="text" id="profitDetail" style="margin-top:8px;" />
       </div>
 
       <div class="box">
@@ -1089,12 +1118,22 @@
           </div>
           <div>
             <label class="field-label" data-t="deliveryLabel">사용 중인 배달앱</label>
+            <div class="chips" data-group="deliveryAppChips" data-max="7" id="deliveryAppBox">
+              <button type="button" class="chip" data-val="배달의민족">배달의민족</button>
+              <button type="button" class="chip" data-val="쿠팡이츠">쿠팡이츠</button>
+              <button type="button" class="chip" data-val="땡겨요">땡겨요</button>
+              <button type="button" class="chip" data-val="요기요">요기요</button>
+              <button type="button" class="chip" data-val="먹깨비">먹깨비</button>
+              <button type="button" class="chip" data-val="기타">기타</button>
+              <button type="button" class="chip dashed" data-val="사용 안 함">사용 안 함</button>
+            </div>
             <input type="text" id="deliveryApps" placeholder="예) 배민, 쿠팡이츠 / 미사용" />
           </div>
         </div>
-        <label class="field-label">인스타그램 / 카카오톡 채널</label>
+        <p class="optional-note">아래 인스타그램·카카오톡 채널·네이버 플레이스 링크는 <strong>선택 사항</strong>이에요. 없으면 비워 두셔도 돼요.</p>
+        <label class="field-label">인스타그램 / 카카오톡 채널 <span class="opt-tag">선택</span></label>
         <input type="text" id="snsChannels" placeholder="예) @store_official / 카카오채널 OO매장" />
-        <label class="field-label">네이버 플레이스 링크 (URL)</label>
+        <label class="field-label">네이버 플레이스 링크 (URL) <span class="opt-tag">선택</span></label>
         <p class="box-sub">같은 이름의 다른 매장과 헷갈리지 않도록 플레이스 주소를 붙여넣어 주세요.</p>
         <input type="url" id="placeUrl" inputmode="url" placeholder="예) https://naver.me/xxxx 또는 https://m.place.naver.com/..." />
       </div>
@@ -1227,26 +1266,27 @@
 
       <section class="sales-pitch" aria-labelledby="salesPitchTitle">
         <p class="sales-eyebrow">다음 단계 · 매출 구조 진단</p>
-        <h3 id="salesPitchTitle">목표 매출까지,<br/>어느 구간을 채워야 할까요?</h3>
-        <div class="sales-formula" aria-label="매출은 신규 고객 더하기 재방문 고객, 곱하기 객단가">
-          <span class="f-label">매출</span><span class="f-op">=</span>
-          <span class="f-group">( <b>신규 고객</b> + <b>재방문 고객</b> )</span>
-          <span class="f-op">×</span><b class="f-price">객단가</b>
+        <h3 id="salesPitchTitle">매장 매출, 어떻게 올려야 할지<br/>막막하신가요?</h3>
+        <p class="sales-desc">매출을 올리지 못하는 이유는 <b>매출 구조를 모르기 때문</b>이에요.</p>
+        <div class="sales-formula" aria-label="매출은 고객 수 곱하기 객단가, 고객 수는 신규 고객 더하기 재방문 고객">
+          <div class="f-row"><span class="f-label">매출</span><span class="f-op">=</span><b>고객 수</b><span class="f-op">×</span><b class="f-price">객단가</b></div>
+          <div class="f-sub">고객 수 = 신규 + 재방문</div>
         </div>
-        <p class="sales-desc">지금 우리 매장이 어디서 새고 있는지 알아야, 광고를 어디에 써야 할지 보입니다. 실제 매출 데이터로 이렇게 짚어 드려요.</p>
+        <p class="sales-desc">지금 내 매장의 매출 구조를 모르는 상태에서 단순히 열심히 한다고 매출은 절대 오르지 않습니다.</p>
+        <p class="sales-desc">"광고하면 되겠지, 인스타 하면, 스레드 하면, 블로그 하면…" 수많은 방법을 해 봤는데도 크게 도움이 안 되셨던 이유가 바로 이 문제입니다.</p>
+        <p class="sales-desc"><b>진짜 장사가 잘되는 매장</b>은 내 매장에 부족한 게 신규 고객인지, 재방문 고객인지, 객단가인지, 그리고 어느 요일 어느 시간대가 비는지 알고, 그에 맞는 전략으로 하나씩 문제를 풀어 가며 매출을 올리고 있습니다.</p>
         <div class="sales-gallery" aria-label="실제 매출 구조 분석 리포트 예시">
           <figure><img src="https://jangsamarketing-hub.github.io/remaind-branding/survey-assets/report-summary.png" alt="매출 추이, 신규 대 재방문 비율, 시간대별 매출이 표시된 분석 리포트 예시" loading="lazy" /><figcaption>신규 vs 재방문 비율 · 재방문율 15.1% · 저녁에 몰린 매출</figcaption></figure>
           <figure><img src="https://jangsamarketing-hub.github.io/remaind-branding/survey-assets/report-time.png" alt="요일별 객단가와 시간대·요일별 매출 분석표 예시" loading="lazy" /><figcaption>요일별 객단가 · 비어 있는 시간대와 요일</figcaption></figure>
         </div>
-        <ul class="sales-points">
-          <li><b>신규 vs 재방문</b> 비율과 평균 재방문 주기</li>
-          <li><b>비어 있는 시간대·요일</b>, 어디에 손님을 채울지</li>
-          <li><b>객단가</b>를 올릴 메뉴·세트 구성</li>
-        </ul>
-        <p class="sales-cta-lead">우리 매장 브랜드 스토리를 기반으로 <b>SEO·GEO·AEO</b>를 세팅하고, 매출 구조 분석으로 <b>매출을 올리고 싶은 대표님</b>들은 아래에서 상담받아 보세요!</p>
-        <p class="sales-cta-sub">SEO·GEO·AEO: 네이버·구글 검색과 AI 답변에 우리 매장이 잘 나오도록 하는 세팅</p>
+        <div class="sales-warning">
+          <p>AI가 산업과 시장을 바꾸고, 사람을 덜 쓰는 시대가 왔습니다. 직장인도 자영업자도 이 변화 속에서 경제적으로 어려워지고 있어요.</p>
+          <p>지금도 폐업이 100만을 넘어서고 있고, 자영업 시장은 앞으로 더 어려워질 겁니다. "시간이 지나면, 경기가 나아지면 괜찮겠지" 하며 하루 이틀 시간만 보내지 마세요.</p>
+          <p><b>아무것도 하지 않으면 아무 일도 일어나지 않고, 그 누구도 대표님 매장을 도와주지도 찾아 주지도 않습니다.</b></p>
+        </div>
+        <p class="sales-cta-lead">정말 간절한 마음으로 살아남고 싶다면,<br/><b>진짜 전문가에게 상담부터 받아 보세요.</b></p>
         <a class="btn kakao-btn" href="https://open.kakao.com/o/s9XzlJPi" target="_blank" rel="noopener">카카오톡으로 무료 상담하기</a>
-        <p class="sales-note">채팅방에 매장명을 남겨 주시면, 오늘 답변을 바탕으로 브랜딩 스토리부터 마케팅 세팅 방향까지 같이 잡아 드릴게요.</p>
+        <p class="sales-note">채팅방에 매장명을 남겨 주시면, 오늘 답변을 바탕으로 우리 매장 매출 구조부터 같이 짚어 드릴게요.</p>
       </section>
 
       <div class="biz-card">
@@ -1285,7 +1325,7 @@ const DEFAULT_TEXT = {
   channelLabel: '홀 / 포장 / 배달 비중',
   channelPh: '예) 홀 85% / 포장 10% / 배달 5%',
   deliveryLabel: '사용 중인 배달앱',
-  deliveryPh: '예) 배민, 쿠팡이츠 / 미사용',
+  deliveryPh: '기타 앱이 있으면 적어주세요 (선택)',
   competitorsPh: '예) 경쟁: OO고깃집 / 닮고 싶은 곳: OO스테이크하우스',
   painPointsPh: '예) 일반 매장으로만 보여서 객단가와 단골·모임 손님을 늘리고 싶습니다.',
   desiredPh: '예) 플레이스 전환율 상승 및 인스타/당근 광고로 신규 모임 유입'
@@ -2044,6 +2084,11 @@ function chips(group) {
   return (selectedChips[group] || []).join(', ');
 }
 
+// 배달앱은 선택칩(식당·카페) + 직접 입력을 합친다.
+function deliveryValue() {
+  return [chips('deliveryAppChips'), val('deliveryApps')].filter(Boolean).join(', ');
+}
+
 function chipsWith(group, customId) {
   return [...(selectedChips[group] || []), val(customId)].filter(Boolean).join(', ');
 }
@@ -2116,6 +2161,9 @@ function applyIndustry(key) {
   updateGuestContext();
   // split-fields.js는 이 파일 뒤에 실리므로, 처음 불릴 때는 아직 없을 수 있다.
   if (typeof refreshSplitFields === 'function') refreshSplitFields();
+  // 배달앱 선택칩은 배달이 있는 식당·카페에서만 보여준다.
+  const deliveryBox = document.getElementById('deliveryAppBox');
+  if (deliveryBox) deliveryBox.hidden = !['food', 'cafe'].includes(key);
 }
 
 function updateGuestContext() {
@@ -2264,7 +2312,7 @@ function buildPayload() {
     marketingBudget: ['현재: ' + val('currentMktCost'), '가능: ' + val('affordableMktCost')].join(' / '),
     experienceTeam: [val('expTeamSpec'), '클립희망: ' + chips('clipIntent')].filter(Boolean).join(' | '),
     ownerContactInfo: [val('placeName'), val('ownerContact'), val('callTime')].filter(Boolean).join(' / '),
-    snsAndDelivery: [val('deliveryApps'), val('snsChannels')].filter(Boolean).join(' | '),
+    snsAndDelivery: [deliveryValue(), val('snsChannels')].filter(Boolean).join(' | '),
     competitorsAndRef: val('competitorsAndRef'),
     painPoints: val('painPoints'),
     desiredDirection: val('desiredDirection'),
@@ -2283,6 +2331,8 @@ function buildPayload() {
     surveyStatus: chips('surveyStatus'),
     surveyIntent: chips('surveyIntent'),
     incentiveBlocker: val('incentiveBlocker'),
+    // v12: 영업이익 (흑자·적자 + 이익률·이익금)
+    operatingProfit: [chips('profitState'), val('profitDetail')].filter(Boolean).join(' · '),
     // v5: 12단계 대문 사진 방향 (designCompose, textAgree, textStyle, refStyle)
     ...designAnswers()
   };
@@ -2375,7 +2425,7 @@ function resultSections(p) {
     ['9. 매장 운영정보', [
       ['영업시간·휴무일', p.bizHours], ['주차', p.parkingInfo], ['매장 전화번호', p.storePhone],
       ['평수·층수', val('spaceFloor')], [t('tableLabel'), val('tableCounts')],
-      ['보증금 / 월세', p.depositAndRent], [t('channelLabel'), p.channelRatio], ['매출 현황', p.salesMetrics],
+      ['보증금 / 월세', p.depositAndRent], [t('channelLabel'), p.channelRatio], ['월매출 현황', p.salesMetrics], ['영업이익', p.operatingProfit],
       ['가장 많이 나가는 주력 상품과 가격', p.signatureProduct], ['신규 손님에게 밀고 싶은 고단가 상품·패키지', p.premiumProduct]]],
     ['10. 마케팅·희망 채널', [
       ['희망 마케팅 채널', p.marketingChannels], ['감당 가능한 월 마케팅 예산', val('affordableMktCost')],
@@ -2383,7 +2433,7 @@ function resultSections(p) {
       ['숏폼 촬영 희망', chips('clipIntent')]]],
     ['11. 대표님 정보 & 희망 방향', [
       ['플레이스 등록 매장명', val('placeName')], ['대표님 성함 / 연락처', val('ownerContact')],
-      ['통화 가능 시간', val('callTime')], [t('deliveryLabel'), val('deliveryApps')],
+      ['통화 가능 시간', val('callTime')], [t('deliveryLabel'), deliveryValue()],
       ['인스타그램 / 카카오톡 채널', val('snsChannels')], ['네이버 플레이스 링크', p.placeUrl],
       ['경쟁·닮고 싶은 매장', p.competitorsAndRef],
       ['현재 고민', p.painPoints], ['원하는 방향·기대 성과', p.desiredDirection]]],
@@ -2498,7 +2548,8 @@ const SPLIT_FIELDS = {
   tableCounts: () => labelParts(industryText('tableLabel'), /\s*수$/).map(p => [p, '예) 3개']),
   depositAndRent: [['보증금', '예) 5,000만'], ['월세', '예) 280만']],
   channelRatio: () => labelParts(industryText('channelLabel'), /\s*비중$/).map(p => [p, '예) 60%']),
-  salesMetrics: [['현재', '예) 3,200만'], ['목표', '예) 5,000만'], ['최고', '예) 4,500만'], ['최저', '예) 2,400만']],
+  salesMetrics: [['현재', '예) 3,200만'], ['목표', '예) 5,000만'], ['역대 최고', '예) 4,500만'], ['역대 최저', '예) 2,400만']],
+  profitDetail: [['영업이익률', '예) 15%'], ['월 영업이익(손실)', '예) 450만']],
   expTeamSpec: [['팀당 제공 금액', '예) 5만 원 상당'], ['희망 모집 인원', '예) 월 10팀']],
   ownerContact: [['성함', '예) 홍길동'], ['연락처', '예) 010-0000-0000']],
   snsChannels: [['인스타그램', '예) @store_official'], ['카카오톡 채널', '예) OO매장']],
