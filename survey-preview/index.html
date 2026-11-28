@@ -419,6 +419,48 @@
     .biz-card dd { margin: 0; overflow-wrap: anywhere; }
     .biz-card a { color: #f3f1e9; }
 
+    /* v8: 완료 화면을 상담 문의 중심으로 압축 */
+    .done-head { text-align: center; padding: 6px 4px 14px; }
+    .done-head .done-icon { font-size: 34px; margin-bottom: 6px; }
+    .done-head p { margin: 6px 0 0; font-size: 13.5px; line-height: 1.65; color: #374151; }
+    .done-card { border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; margin-bottom: 10px; background: #fff; }
+    .done-card-title { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+    .done-actions { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 6px; }
+    .done-actions .btn { padding: 10px 6px; font-size: 13px; }
+    .done-card .result-hint { margin: 6px 0 0; min-height: 0; }
+    .result-details summary { font-size: 12px; color: var(--muted); cursor: pointer; margin-top: 8px; }
+    .result-details textarea { margin-top: 8px; min-height: 220px; font-size: 12.5px; }
+    .gift-card { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 12px; align-items: center; }
+    .gift-card img { width: 100%; border-radius: 6px; box-shadow: 0 3px 10px rgba(15, 23, 42, 0.2); }
+    .gift-card .done-card-title { margin-bottom: 2px; font-size: 13.5px; }
+    .gift-body p { margin: 0 0 6px; font-size: 12px; color: var(--muted); }
+    .gift-links { display: flex; flex-wrap: wrap; gap: 6px; }
+    .gift-links a { font-size: 12.5px; font-weight: 700; color: var(--primary); background: var(--primary-light); padding: 6px 10px; border-radius: 8px; text-decoration: none; }
+    .sales-pitch { background: #181a1f; color: #f3f1e9; border-radius: 18px; padding: 20px 16px; margin: 18px 0 10px; display: grid; gap: 12px; }
+    .sales-eyebrow { margin: 0; font-size: 12px; font-weight: 700; color: #d4dc2c; letter-spacing: 0.04em; }
+    .sales-pitch h3 { margin: 0; font-size: 21px; line-height: 1.35; }
+    .sales-formula { background: #23262d; border-radius: 12px; padding: 12px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+      gap: 4px 6px; font-size: 14px; }
+    .sales-formula b { color: #fff; }
+    .sales-formula .f-label { font-weight: 800; color: #d4dc2c; }
+    .sales-formula .f-op { color: #9a978d; font-weight: 700; }
+    .sales-formula .f-price { color: #d4dc2c; }
+    .sales-desc { margin: 0; font-size: 13px; line-height: 1.65; color: #c9c6bb; }
+    .sales-gallery { display: grid; grid-auto-flow: column; grid-auto-columns: 86%; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory;
+      padding-bottom: 4px; margin: 0 -4px; }
+    .sales-gallery figure { margin: 0; scroll-snap-align: start; display: grid; gap: 4px; }
+    .sales-gallery img { width: 100%; border-radius: 10px; background: #fff; }
+    .sales-gallery figcaption { font-size: 11.5px; color: #c9c6bb; }
+    .sales-points { margin: 0; padding-left: 18px; font-size: 13px; line-height: 1.7; color: #e5e2d8; }
+    .sales-points b { color: #fff; }
+    .sales-pitch .kakao-btn { display: block; text-align: center; text-decoration: none; background: #fee500; color: #191919; font-weight: 800; font-size: 15px; padding: 14px; border-radius: 12px; }
+    .sales-note { margin: 0; font-size: 12px; line-height: 1.6; color: #9a978d; }
+    .biz-card { padding: 14px 16px; gap: 4px; }
+    .biz-logo { font-size: 17px; }
+    .biz-logo small { display: block; font-size: 11.5px; font-weight: 400; color: #c9c6bb; letter-spacing: 0; margin-top: 2px; }
+    .biz-links { margin: 4px 0 0; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; }
+    .biz-links a { color: #f3f1e9; }
+
   </style>
 </head>
 <body>
@@ -1051,65 +1093,69 @@
       </div>
     </div>
 
-    <!-- STEP 15: 완료 화면 (감사 인사 → 정리본 → 접객 매뉴얼 선물 → 상담 → 연락처) -->
+<!-- STEP 15: 완료 화면. 목표는 상담 문의. 순서: 짧은 감사 → 내 답변 받기(한 줄) → 선물(한 줄) → 매출 구조 진단 제안(핵심) → 연락처 -->
     <div class="step" data-step="15">
-      <div class="done-wrap">
+      <div class="done-head">
         <div class="done-icon">✅</div>
-        <h2 class="step-title">우리 매장 브랜딩 답변에<br/>참여하시느라 고생 많으셨습니다.</h2>
+        <h2 class="step-title">답변하시느라 고생 많으셨습니다.</h2>
+        <p>답하시면서 창업 초반의 마음과 지금 놓치고 있는 부분이 보이셨다면, <strong>그걸 알아차린 순간이 성장의 첫 시작</strong>입니다. 하나씩 실제 매장 운영에 꼭 반영해 보세요.</p>
       </div>
 
-      <div class="done-letter">
-        <p>질문에 답을 하시면서, 창업 초반의 마음가짐과 지금 운영하면서 지키지 못하고 있는 부분들이 느껴지신 분들도 계실 거예요.</p>
-        <p>그건 너무도 당연한 일이에요. <strong>스스로 인지하고 자각하는 단계부터가 성장의 첫 시작</strong>입니다.</p>
-        <p>이 답변을 남겨 둔 것으로 끝내지 마시고, 스스로 놓치고 있던 부분들, 반영하고 싶었던 부분들을 하나씩 실제 매장 운영에 반영하셨으면 좋겠습니다.</p>
-      </div>
-
-      <div class="box result-box">
-        <div class="box-title">📄 내 답변 정리본</div>
-        <p class="box-sub">대표님이 답하신 내용을 한 번에 정리했어요. 복사하거나 파일로 저장해 두고 매장 운영에 꺼내 보세요.</p>
-        <textarea id="resultText" readonly></textarea>
-        <div class="result-actions">
-          <button type="button" class="btn btn-next" onclick="copyResult()">전체 복사하기</button>
-          <button type="button" class="btn btn-prev" onclick="downloadResult('md')">.md 파일 저장</button>
-          <button type="button" class="btn btn-prev" onclick="downloadResult('txt')">.txt 파일 저장</button>
+      <div class="done-card">
+        <div class="done-card-title">📄 내 답변 받기</div>
+        <div class="done-actions">
+          <button type="button" class="btn btn-next" onclick="copyResult()">전체 복사</button>
+          <button type="button" class="btn btn-prev" onclick="downloadResult('md')">.md 저장</button>
+          <button type="button" class="btn btn-prev" onclick="downloadResult('txt')">.txt 저장</button>
         </div>
         <p class="result-hint" id="resultHint" aria-live="polite"></p>
+        <details class="result-details" id="resultDetails">
+          <summary>정리본 미리 보기</summary>
+          <textarea id="resultText" readonly></textarea>
+        </details>
       </div>
 
-      <div class="box gift-box">
-        <div class="box-title">🎁 작은 선물을 하나 더 준비했습니다</div>
-        <p>답변 작성하시느라 고생하신 대표님께, RE:MAIN:D가 직접 만든 <strong>「고객을 남기는 접객 매뉴얼」</strong>을 드려요. 들어오시는 순간부터 나가시는 순간까지, 바로 따라 할 수 있는 행동과 멘트를 담았어요.</p>
-        <div class="gift-row">
-          <img src="https://jangsamarketing-hub.github.io/remaind-branding/survey-assets/manual-cover.png" alt="고객을 남기는 접객 매뉴얼 표지" loading="lazy" />
-          <div class="gift-actions">
-            <a class="btn btn-next" href="https://jangsamarketing-hub.github.io/remaind-branding/survey-assets/remaind-manual.pdf" target="_blank" rel="noopener">PDF로 받기</a>
-            <a class="btn btn-prev" href="https://jangsamarketing-hub.github.io/remaind-branding/survey-assets/remaind-manual-images.zip" target="_blank" rel="noopener">이미지 17장으로 받기</a>
-            <p class="box-sub">이미지는 압축(zip) 파일로 받아져요.</p>
+      <div class="done-card gift-card">
+        <img src="https://jangsamarketing-hub.github.io/remaind-branding/survey-assets/manual-cover.png" alt="고객을 남기는 접객 매뉴얼 표지" loading="lazy" />
+        <div class="gift-body">
+          <div class="done-card-title">🎁 감사 선물: 고객을 남기는 접객 매뉴얼</div>
+          <p>들어오시는 순간부터 나가실 때까지, 바로 따라 하는 행동과 멘트</p>
+          <div class="gift-links">
+            <a href="https://jangsamarketing-hub.github.io/remaind-branding/survey-assets/remaind-manual.pdf" target="_blank" rel="noopener">PDF 받기</a>
+            <a href="https://jangsamarketing-hub.github.io/remaind-branding/survey-assets/remaind-manual-images.zip" target="_blank" rel="noopener">이미지 17장(zip)</a>
           </div>
         </div>
       </div>
 
-      <div class="box consult-box">
-        <div class="box-title">혼자 하기 어려우시다면, 같이 해요</div>
-        <p>지금 이 답변을 바로 내려받아 직접 세팅하실 수도 있지만, 혼자서 하시기 어려운 대표님들은 아래 카카오톡 채팅방으로 문의 주세요. 브랜딩 스토리라인부터 매장의 마케팅 세팅 방향까지 같이 상담해 드리고 도와드릴게요.</p>
-        <p><strong>우리 매장의 현재 매출 구조를 데이터로 분석해서 방향을 잡아 드립니다.</strong></p>
-        <ul class="consult-list">
-          <li>신규 고객과 재방문 고객 비율</li>
-          <li>비어 있는 매출 시간대와 요일</li>
-          <li>객단가</li>
+      <section class="sales-pitch" aria-labelledby="salesPitchTitle">
+        <p class="sales-eyebrow">다음 단계 · 매출 구조 진단</p>
+        <h3 id="salesPitchTitle">목표 매출까지,<br/>어느 구간을 채워야 할까요?</h3>
+        <div class="sales-formula" aria-label="매출은 신규 고객 더하기 재방문 고객, 곱하기 객단가">
+          <span class="f-label">매출</span><span class="f-op">=</span>
+          <span class="f-group">( <b>신규 고객</b> + <b>재방문 고객</b> )</span>
+          <span class="f-op">×</span><b class="f-price">객단가</b>
+        </div>
+        <p class="sales-desc">지금 우리 매장이 어디서 새고 있는지 알아야, 광고를 어디에 써야 할지 보입니다. 실제 매출 데이터로 이렇게 짚어 드려요.</p>
+        <div class="sales-gallery" tabindex="0" aria-label="실제 매출 구조 분석 리포트 예시, 옆으로 넘겨 보세요">
+          <figure><img src="https://jangsamarketing-hub.github.io/remaind-branding/survey-assets/report-summary.png" alt="매출 추이, 신규 대 재방문 비율, 시간대별 매출이 표시된 분석 리포트 예시" loading="lazy" /><figcaption>재방문율 15.1% · 저녁에 몰린 매출</figcaption></figure>
+          <figure><img src="https://jangsamarketing-hub.github.io/remaind-branding/survey-assets/report-time.png" alt="요일별 객단가와 시간대·요일별 매출 분석표 예시" loading="lazy" /><figcaption>비어 있는 시간대·요일 · 객단가</figcaption></figure>
+        </div>
+        <ul class="sales-points">
+          <li><b>신규 vs 재방문</b> 비율과 평균 재방문 주기</li>
+          <li><b>비어 있는 시간대·요일</b>, 어디에 손님을 채울지</li>
+          <li><b>객단가</b>를 올릴 메뉴·세트 구성</li>
         </ul>
-        <a class="btn btn-next kakao-btn" href="https://open.kakao.com/o/s9XzlJPi" target="_blank" rel="noopener">카카오톡으로 상담 문의하기</a>
-        <p class="box-sub">채팅방에 매장명을 함께 남겨 주세요.</p>
-      </div>
+        <a class="btn kakao-btn" href="https://open.kakao.com/o/s9XzlJPi" target="_blank" rel="noopener">카카오톡으로 무료 상담하기</a>
+        <p class="sales-note">채팅방에 매장명을 남겨 주시면, 오늘 답변을 바탕으로 브랜딩 스토리부터 마케팅 세팅 방향까지 같이 잡아 드릴게요.</p>
+      </section>
 
       <div class="biz-card">
-        <p class="biz-logo">RE<span>:</span>MAIN<span>:</span>D</p>
-        <p class="biz-tag">가치를 남기는 장사, 고객을 남기는 브랜딩.</p>
-        <dl>
-          <div><dt>웹사이트</dt><dd><a href="https://remaind.kr" target="_blank" rel="noopener">remaind.kr</a></dd></div>
-          <div><dt>전화</dt><dd><a href="tel:01030683468">010-3068-3468</a></dd></div>
-          <div><dt>카카오톡</dt><dd><a href="https://open.kakao.com/o/s9XzlJPi" target="_blank" rel="noopener">open.kakao.com/o/s9XzlJPi</a></dd></div>
-        </dl>
+        <p class="biz-logo">RE<span>:</span>MAIN<span>:</span>D <small>가치를 남기는 장사, 고객을 남기는 브랜딩</small></p>
+        <p class="biz-links">
+          <a href="https://remaind.kr" target="_blank" rel="noopener">remaind.kr</a>
+          <a href="tel:01030683468">010-3068-3468</a>
+          <a href="https://open.kakao.com/o/s9XzlJPi" target="_blank" rel="noopener">카카오톡 상담</a>
+        </p>
       </div>
     </div>
 
@@ -2268,6 +2314,9 @@ function setResultHint(message) {
 }
 
 function selectResultText() {
+  // 정리본은 접힌 상자 안에 있어서, 직접 선택해 복사할 때는 먼저 펼친다.
+  const details = document.getElementById('resultDetails');
+  if (details) details.open = true;
   const ta = document.getElementById('resultText');
   ta.focus();
   ta.select();
@@ -2287,7 +2336,7 @@ async function copyResult() {
   try { isCopied = document.execCommand('copy'); } catch (e) { isCopied = false; }
   setResultHint(isCopied
     ? '복사했어요! 메모장이나 카카오톡에 붙여넣으면 됩니다.'
-    : '자동 복사가 막혀 있어요. 글 상자를 길게 눌러 전체 선택한 뒤 복사해주세요.');
+    : '자동 복사가 막혀 있어요. 펼쳐진 정리본을 길게 눌러 전체 선택한 뒤 복사해주세요.');
 }
 
 function resultFileName(ext) {
