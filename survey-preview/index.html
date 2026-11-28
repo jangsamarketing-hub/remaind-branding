@@ -469,6 +469,21 @@
     .sales-cta-lead b { color: #d4dc2c; }
     .sales-cta-sub { margin: -4px 0 0; font-size: 11.5px; color: #9a978d; text-align: center; }
 
+    /* v8: 시작 화면 선물 안내 */
+    .intro-gift { background: #181a1f; color: #f3f1e9; border-radius: 18px; padding: 18px 16px; margin: 0 0 16px; display: grid; gap: 10px; }
+    .intro-gift-eyebrow { margin: 0; font-size: 12.5px; font-weight: 700; color: #d4dc2c; }
+    .intro-gift-title { margin: 0; font-size: 19px; line-height: 1.4; color: #fff; }
+    .intro-gift-desc { margin: 0; font-size: 13px; line-height: 1.6; color: #c9c6bb; }
+    .intro-gift-item { background: #23262d; border-radius: 12px; padding: 12px; display: grid; gap: 6px; }
+    .intro-gift-name { margin: 0; font-size: 14.5px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 8px; }
+    .intro-gift-name span { width: 20px; height: 20px; border-radius: 50%; background: #d4dc2c; color: #181a1f; font-size: 12px;
+      display: inline-flex; align-items: center; justify-content: center; flex: none; }
+    .intro-gift-sub { margin: 0; font-size: 12px; line-height: 1.55; color: #c9c6bb; }
+    .intro-manual { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 2px; }
+    .intro-manual img { width: 100%; aspect-ratio: 1080 / 760; object-fit: cover; object-position: top; border-radius: 8px; background: #f0ebe1; }
+    .intro-compose { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 2px; }
+    .intro-compose .design-thumb { border-radius: 8px; }
+
   </style>
 </head>
 <body>
@@ -1903,7 +1918,15 @@ function designMissing() {
   return null;
 }
 
+// 시작 화면 선물 안내에 대문 사진 구성 예시(①~④)를 미리 보여준다.
+function renderIntroComposePreview() {
+  const box = document.getElementById('introComposePreview');
+  if (!box) return;
+  box.replaceChildren(...DESIGN_COMPOSE.filter(c => c.crop).map(c => designThumb(c)));
+}
+
 renderDesignPicks();
+renderIntroComposePreview();
 
   </script>
   <script>
