@@ -497,6 +497,10 @@
       border-radius: 10px; font-family: inherit; outline: none; background: #fafafa; }
     .split-cell input:focus { border-color: var(--primary); background: #fff; }
 
+    /* v11: 고객 설문조사 설득 문구 */
+    .feedback-note { background: #fff7ed; border-left: 3px solid #f59e0b; border-radius: 8px; padding: 10px 12px; margin: 6px 0 4px; display: grid; gap: 4px; }
+    .feedback-note p { margin: 0; font-size: 13px; line-height: 1.6; color: #374151; }
+
   </style>
 </head>
 <body>
@@ -859,6 +863,14 @@
       <p class="step-desc">정답은 없어요. 실제 원가와 매장 사정에 맞춰 편하게 골라주세요.</p>
 
       <div class="box">
+        <div class="box-title">지금 리뷰 이벤트를 진행하고 계세요?</div>
+        <div class="chips" data-group="reviewEvent" data-max="1">
+          <button type="button" class="chip" data-val="진행하고 있어요">진행하고 있어요</button>
+          <button type="button" class="chip" data-val="예전에 했는데 지금은 안 해요">예전에 했는데 지금은 안 해요</button>
+          <button type="button" class="chip" data-val="해본 적 없어요">해본 적 없어요</button>
+        </div>
+      </div>
+      <div class="box">
         <div class="box-title">리뷰 이벤트 · 참여 손님 1명당 원가</div>
         <div class="chips" data-group="reviewBudget" data-max="1">
           <button type="button" class="chip" data-val="1,000원 미만">1,000원 미만</button>
@@ -869,6 +881,25 @@
         </div>
       </div>
 
+      <div class="box feedback-box">
+        <div class="box-title">고객 설문조사(피드백 받기)도 하고 계세요?</div>
+        <div class="feedback-note">
+          <p>고객의 솔직한 피드백은 매장 운영에 정말 큰 도움이 됩니다.</p>
+          <p><strong>불만을 가진 고객은 말없이 다시 오지 않아요.</strong> 소 잃고 외양간 못 고치는 일은 절대 없어야 합니다.</p>
+          <p>소를 잃더라도 외양간은 고쳐야, <strong>밑 빠진 독을 메울 수 있습니다.</strong></p>
+        </div>
+        <label class="field-label">지금 진행 여부</label>
+        <div class="chips" data-group="surveyStatus" data-max="1">
+          <button type="button" class="chip" data-val="진행하고 있어요">진행하고 있어요</button>
+          <button type="button" class="chip" data-val="안 하고 있어요">안 하고 있어요</button>
+        </div>
+        <label class="field-label">앞으로 해보실 의향이 있으세요?</label>
+        <div class="chips" data-group="surveyIntent" data-max="1">
+          <button type="button" class="chip" data-val="네, 해보고 싶어요">네, 해보고 싶어요</button>
+          <button type="button" class="chip" data-val="방법을 알려주시면 해볼게요">방법을 알려주시면 해볼게요</button>
+          <button type="button" class="chip" data-val="아직은 어려워요">아직은 어려워요</button>
+        </div>
+      </div>
       <div class="box">
         <div class="box-title">설문조사 참여 보상 · 응답 1명당 원가</div>
         <div class="chips" data-group="surveyBudget" data-max="1">
@@ -904,12 +935,13 @@
         </div>
       </div>
       <div class="box">
-        <div class="box-title">8. 리뷰·이벤트 운영 정보</div>
+        <div class="box-title">리뷰 이벤트·설문조사·포인트 적립을 하기 어렵다면, 그 이유를 적어주세요</div>
+        <p class="box-sub">이유를 알아야 대표님 매장에 맞는 방법을 같이 찾을 수 있어요.</p>
+        <textarea id="incentiveBlocker" placeholder="예) 원가 부담이 커서, 바쁠 때 직원이 챙길 여유가 없어서, 해봤는데 참여가 적어서"></textarea>
+      </div>
+      <div class="box">
+        <div class="box-title">리뷰·재방문 운영 정보</div>
         <div class="grid-2">
-          <div>
-            <label class="field-label">리뷰 이벤트 운영 여부</label>
-            <textarea id="reviewStatus" placeholder="예) 네이버 리뷰 작성 시 음료 제공"></textarea>
-          </div>
           <div>
             <label class="field-label">현재 제공 혜택</label>
             <textarea id="currentBenefit" placeholder="예) 음료, 사이드 메뉴"></textarea>
@@ -1986,7 +2018,7 @@ const VARIABLE_GROUPS = ['startReason', 'initialPlan', 'corePrinciple', 'neverDo
 // 입력칸 id → 업종별 예시 문구 키
 const PLACEHOLDER_KEYS = {
   specialMethod: 'specialMethodPh', misunderstanding: 'misunderstandingPh', guestBadge: 'guestBadgePh',
-  characterNote: 'characterNotePh', reviewStatus: 'reviewStatusPh',
+  characterNote: 'characterNotePh',
   currentBenefit: 'currentBenefitPh', bizHours: 'bizHoursPh', tableCounts: 'tablePh', channelRatio: 'channelPh',
   deliveryApps: 'deliveryPh', competitorsAndRef: 'competitorsPh', painPoints: 'painPointsPh', desiredDirection: 'desiredPh',
   // v4: 공통 입력칸 + 인터뷰형 질문
@@ -2217,7 +2249,7 @@ function buildPayload() {
     reviewBudget: chips('reviewBudget'),
     surveyBudget: chips('surveyBudget'),
     pointRate: chips('pointRate'),
-    reviewStatus: val('reviewStatus'),
+    reviewStatus: chips('reviewEvent'),
     currentBenefit: val('currentBenefit'),
     revisitMethod: val('revisitMethod'),
     customerFeedback: val('customerFeedback'),
@@ -2247,6 +2279,10 @@ function buildPayload() {
     signatureProduct: val('signatureProduct'),
     premiumProduct: val('premiumProduct'),
     placeUrl: val('placeUrl'),
+    // v11: 고객 설문조사 진행·의향, 리뷰·설문·적립이 어려운 이유
+    surveyStatus: chips('surveyStatus'),
+    surveyIntent: chips('surveyIntent'),
+    incentiveBlocker: val('incentiveBlocker'),
     // v5: 12단계 대문 사진 방향 (designCompose, textAgree, textStyle, refStyle)
     ...designAnswers()
   };
@@ -2331,7 +2367,9 @@ function resultSections(p) {
       ['얼굴·캐릭터 출연', p.faceAndCharacter]]],
     ['8. 해줄 수 있는 범위', [
       ['리뷰 이벤트 1명당 원가', p.reviewBudget], ['설문 참여 보상 1명당 원가', p.surveyBudget],
-      ['재방문 포인트 적립률', p.pointRate], ['고객 평균 재방문 주기', p.revisitCycle], ['리뷰 이벤트 운영', p.reviewStatus],
+      ['재방문 포인트 적립률', p.pointRate], ['고객 평균 재방문 주기', p.revisitCycle], ['리뷰 이벤트 진행 여부', p.reviewStatus],
+      ['고객 설문조사 진행 여부', p.surveyStatus], ['고객 설문조사 참여 의향', p.surveyIntent],
+      ['리뷰·설문·적립이 어려운 이유', p.incentiveBlocker],
       ['현재 제공 혜택', p.currentBenefit], ['재방문 유도 방식', p.revisitMethod],
       ['고객 반응·자주 받는 요청', p.customerFeedback]]],
     ['9. 매장 운영정보', [
